@@ -58,7 +58,13 @@ func init() {
 		&models.UserPayment{},
 		&models.ShoppingSession{},
 		&models.Product{},
+		&models.ProductCategory{},
+		&models.ProductInventory{},
 		&models.CartItem{},
+		&models.Discount{},
+		&models.OrderDetails{},
+		&models.OrderItems{},
+		&models.PaymentDetails{},
 	)
 
 }
