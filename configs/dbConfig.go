@@ -2,8 +2,12 @@ package configs
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"regexp"
 
+	"github.com/aimbot1526/adhd-server/app/models"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -11,7 +15,26 @@ import (
 
 var db *gorm.DB
 
+func loadEnv() error {
+	const projectDirName = "adhd-server"
+	projectName := regexp.MustCompile(`^(.*` + projectDirName + `)`)
+	currentWorkDirectory, _ := os.Getwd()
+	rootPath := projectName.Find([]byte(currentWorkDirectory))
+
+	err := godotenv.Load(string(rootPath) + `/.env`)
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+	return err
+}
+
 func init() {
+
+	e := loadEnv()
+	if e != nil {
+		fmt.Print(e)
+	}
 
 	username := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASS")
@@ -28,6 +51,15 @@ func init() {
 	}
 
 	db = conn
+
+	db.AutoMigrate(
+		&models.User{},
+		&models.UserAddress{},
+		&models.UserPayment{},
+		&models.ShoppingSession{},
+		&models.Product{},
+		&models.CartItem{},
+	)
 
 }
 
