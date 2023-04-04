@@ -1,4 +1,4 @@
-package configs
+package models
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/aimbot1526/adhd-server/app/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -53,18 +52,17 @@ func init() {
 	db = conn
 
 	db.AutoMigrate(
-		&models.User{},
-		&models.UserAddress{},
-		&models.UserPayment{},
-		&models.ShoppingSession{},
-		&models.Product{},
-		&models.ProductCategory{},
-		&models.ProductInventory{},
-		&models.CartItem{},
-		&models.Discount{},
-		&models.OrderDetails{},
-		&models.OrderItems{},
-		&models.PaymentDetails{},
+		UserAddress{},
+		UserPayment{},
+		ShoppingSession{},
+		Product{},
+		ProductCategory{},
+		ProductInventory{},
+		CartItem{},
+		Discount{},
+		OrderDetails{},
+		OrderItems{},
+		PaymentDetails{},
 	)
 
 }
