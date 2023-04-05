@@ -17,6 +17,18 @@ type User struct {
 	UserPayment     []UserPayment
 }
 
+func MapUser(u *User) *User {
+	temp := User{
+		ID:         u.ID,
+		Email:      u.Email,
+		Phone:      u.Phone,
+		Created_At: u.Created_At,
+		Updated_At: u.Updated_At,
+		Role:       u.Role,
+	}
+	return &temp
+}
+
 func (user *User) Create() error {
 
 	err := GetDB().Create(user).Error
@@ -66,7 +78,7 @@ func FindByEmail(email string) *User {
 
 	temp := User{Email: email}
 
-	err := GetDB().Where("email = ?").First(&temp).Error
+	err := GetDB().Where("email = ?").First(&temp)
 
 	if err != nil {
 		return &temp
