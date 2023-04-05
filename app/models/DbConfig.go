@@ -51,19 +51,19 @@ func init() {
 
 	db = conn
 
-	db.AutoMigrate(
-		UserAddress{},
-		UserPayment{},
-		ShoppingSession{},
-		Product{},
-		ProductCategory{},
-		ProductInventory{},
-		CartItem{},
-		Discount{},
-		OrderDetails{},
-		OrderItems{},
-		PaymentDetails{},
-	)
+	// db.AutoMigrate(
+	// 	UserAddress{},
+	// 	UserPayment{},
+	// 	ShoppingSession{},
+	// 	Product{},
+	// 	ProductCategory{},
+	// 	ProductInventory{},
+	// 	CartItem{},
+	// 	Discount{},
+	// 	OrderDetails{},
+	// 	OrderItems{},
+	// 	PaymentDetails{},
+	// )
 
 }
 

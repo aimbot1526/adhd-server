@@ -15,5 +15,7 @@ func main() {
 
 	routes.ProductRoute(app)
 
+	routes.UserRoute(app)
+
 	server.StartServer(app)
 }
