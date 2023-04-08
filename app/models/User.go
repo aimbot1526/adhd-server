@@ -61,7 +61,7 @@ func (user *User) Delete() error {
 	return nil
 }
 
-func Update(user *User) error {
+func UpdateUser(user *User) error {
 
 	err := GetDB().First(user).Error
 
@@ -74,7 +74,7 @@ func Update(user *User) error {
 	return nil
 }
 
-func FindByEmail(email string) *User {
+func FindByUserEmail(email string) *User {
 
 	temp := User{Email: email}
 

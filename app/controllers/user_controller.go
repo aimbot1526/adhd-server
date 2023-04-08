@@ -18,7 +18,7 @@ func CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
-	exUser := models.FindByEmail(u.Email)
+	exUser := models.FindByUserEmail(u.Email)
 
 	if exUser.ID != 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

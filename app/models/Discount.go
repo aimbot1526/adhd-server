@@ -10,3 +10,61 @@ type Discount struct {
 	Created_At      time.Time
 	Updated_At      time.Time
 }
+
+func MapDiscount(d *Discount) *Discount {
+	temp := Discount{
+		ID:              d.ID,
+		Name:            d.Name,
+		Active:          d.Active,
+		Created_At:      d.Created_At,
+		Updated_At:      d.Updated_At,
+		DiscountPercent: d.DiscountPercent,
+	}
+	return &temp
+}
+
+func (discount *Discount) Create() error {
+
+	err := GetDB().Create(discount).Error
+
+	if err != nil {
+		return db.Error
+	}
+	return nil
+}
+
+func (d *Discount) Delete() error {
+
+	err := GetDB().Delete(d).Error
+
+	if err != db.Error {
+		return db.Error
+	}
+	return nil
+}
+
+func UpdateDiscount(d *Discount) error {
+
+	err := GetDB().First(d).Error
+
+	if err != nil {
+		return err
+	}
+
+	GetDB().Save(d)
+
+	return nil
+}
+
+func FindByName(name string) *Discount {
+
+	temp := Discount{Name: name}
+
+	err := GetDB().Where("name = ?").First(&temp)
+
+	if err != nil {
+		return &temp
+	}
+
+	return &temp
+}
