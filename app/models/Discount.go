@@ -56,7 +56,7 @@ func UpdateDiscount(d *Discount) error {
 	return nil
 }
 
-func FindByName(name string) *Discount {
+func FindByDiscountName(name string) *Discount {
 
 	temp := Discount{Name: name}
 
