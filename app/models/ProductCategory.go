@@ -54,9 +54,9 @@ func UpdatePC(p *ProductCategory) error {
 
 func FindByProductCategoryName(name string) *ProductCategory {
 
-	temp := ProductCategory{Name: name}
+	temp := ProductCategory{}
 
-	err := GetDB().Where("name = ?").First(&temp)
+	err := GetDB().Where("name = ?", name).First(&temp)
 
 	if err != nil {
 		return &temp
@@ -67,9 +67,9 @@ func FindByProductCategoryName(name string) *ProductCategory {
 
 func FindPcById(id int) *ProductCategory {
 
-	temp := ProductCategory{ID: id}
+	temp := ProductCategory{}
 
-	err := GetDB().Where("id = ?").First(&temp)
+	err := GetDB().Where("id = ?", id).First(&temp)
 
 	if err != nil {
 		return &temp

@@ -54,9 +54,9 @@ func UpdatePI(p *ProductInventory) error {
 
 func FindByQuantity(quantity int) *ProductInventory {
 
-	temp := ProductInventory{Quantity: quantity}
+	temp := ProductInventory{}
 
-	err := GetDB().Where("quantity = ?").First(&temp)
+	err := GetDB().Where("quantity = ?", quantity).First(&temp)
 
 	if err != nil {
 		return &temp
@@ -67,9 +67,9 @@ func FindByQuantity(quantity int) *ProductInventory {
 
 func FindPiById(id int) *ProductInventory {
 
-	temp := ProductInventory{ID: id}
+	temp := ProductInventory{}
 
-	err := GetDB().Where("id = ?").First(&temp)
+	err := GetDB().Where("id = ?", id).First(&temp)
 
 	if err != nil {
 		return &temp

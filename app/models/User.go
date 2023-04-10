@@ -76,9 +76,9 @@ func UpdateUser(user *User) error {
 
 func FindByUserEmail(email string) *User {
 
-	temp := User{Email: email}
+	temp := User{}
 
-	err := GetDB().Where("email = ?").First(&temp)
+	err := GetDB().Where("email = ?", email).First(&temp)
 
 	if err != nil {
 		return &temp

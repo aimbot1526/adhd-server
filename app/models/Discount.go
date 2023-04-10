@@ -58,9 +58,9 @@ func UpdateDiscount(d *Discount) error {
 
 func FindByDiscountName(name string) *Discount {
 
-	temp := Discount{Name: name}
+	temp := Discount{}
 
-	err := GetDB().Where("name = ?").First(&temp)
+	err := GetDB().Where("name = ?", name).First(&temp)
 
 	if err != nil {
 		return &temp
@@ -71,9 +71,9 @@ func FindByDiscountName(name string) *Discount {
 
 func FindDiscountById(id int) *Discount {
 
-	temp := Discount{ID: id}
+	temp := Discount{}
 
-	err := GetDB().Where("id = ?").First(&temp)
+	err := GetDB().Where("id = ?", id).First(&temp)
 
 	if err != nil {
 		return &temp
