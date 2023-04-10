@@ -23,7 +23,7 @@ func CreateProductCategory(c *fiber.Ctx) error {
 	if exCategory.ID != 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
-			"msg":   "Discount already exists. Please try again!",
+			"msg":   "Category already exists. Please try again!",
 		})
 	}
 

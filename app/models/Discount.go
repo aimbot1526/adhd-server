@@ -68,3 +68,16 @@ func FindByDiscountName(name string) *Discount {
 
 	return &temp
 }
+
+func FindDiscountById(id int) *Discount {
+
+	temp := Discount{ID: id}
+
+	err := GetDB().Where("id = ?").First(&temp)
+
+	if err != nil {
+		return &temp
+	}
+
+	return &temp
+}

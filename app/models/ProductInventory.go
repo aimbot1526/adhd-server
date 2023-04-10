@@ -64,3 +64,16 @@ func FindByQuantity(quantity int) *ProductInventory {
 
 	return &temp
 }
+
+func FindPiById(id int) *ProductInventory {
+
+	temp := ProductInventory{ID: id}
+
+	err := GetDB().Where("id = ?").First(&temp)
+
+	if err != nil {
+		return &temp
+	}
+
+	return &temp
+}

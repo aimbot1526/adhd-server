@@ -64,3 +64,16 @@ func FindByProductCategoryName(name string) *ProductCategory {
 
 	return &temp
 }
+
+func FindPcById(id int) *ProductCategory {
+
+	temp := ProductCategory{ID: id}
+
+	err := GetDB().Where("id = ?").First(&temp)
+
+	if err != nil {
+		return &temp
+	}
+
+	return &temp
+}
