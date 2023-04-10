@@ -1,5 +1,7 @@
 FROM golang:1.19
 
+LABEL maintainer="Ansh Jamwal"
+
 RUN mkdir /adhd-server
 
 WORKDIR /adhd-server
@@ -10,9 +12,9 @@ WORKDIR /adhd-server
 
 RUN apt-get update && apt-get install make
 
-COPY .env /adhd-server
-
 COPY . .
+
+COPY .env .
 
 RUN make build
 
