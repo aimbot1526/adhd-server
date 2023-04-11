@@ -35,12 +35,14 @@ func init() {
 		fmt.Print(e)
 	}
 
-	username := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASS")
-	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
+	username := os.Getenv("POSTGRES_USER")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	dbName := os.Getenv("POSTGRES_DB")
+	// dbHost := os.Getenv("DB_HOST")
 
-	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password)
+	// dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password)
+
+	dbUri := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s", username, dbName, password)
 
 	gormConfig := &gorm.Config{}
 	gormConfig.Logger = logger.Default.LogMode(logger.Silent)
@@ -51,19 +53,19 @@ func init() {
 
 	db = conn
 
-	// db.AutoMigrate(
-	// 	UserAddress{},
-	// 	UserPayment{},
-	// 	ShoppingSession{},
-	// 	Product{},
-	// 	ProductCategory{},
-	// 	ProductInventory{},
-	// 	CartItem{},
-	// 	Discount{},
-	// 	OrderDetails{},
-	// 	OrderItems{},
-	// 	PaymentDetails{},
-	// )
+	db.AutoMigrate(
+		UserAddress{},
+		UserPayment{},
+		ShoppingSession{},
+		Product{},
+		ProductCategory{},
+		ProductInventory{},
+		CartItem{},
+		Discount{},
+		OrderDetails{},
+		OrderItems{},
+		PaymentDetails{},
+	)
 
 }
 
