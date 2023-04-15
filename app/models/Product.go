@@ -67,9 +67,9 @@ func Update(d *Product) error {
 
 func FindByProductName(name string) *Product {
 
-	temp := Product{Name: name}
+	temp := Product{}
 
-	err := GetDB().Where("name = ?").First(&temp)
+	err := GetDB().Where("name = ?", name).First(&temp)
 
 	if err != nil {
 		return &temp
@@ -77,3 +77,15 @@ func FindByProductName(name string) *Product {
 
 	return &temp
 }
+
+// func GetAllProducts() *[]Product {
+
+// 	temp := Product{}
+
+// 	err := GetDB().Model(&temp).Preload("ProductCategory").Preload("ProductInventory").Preload("Discount").Find(&temp)
+
+// 	if err != nil {
+// 		return temp
+// 	}
+
+// }
