@@ -1,15 +1,14 @@
 package controllers
 
 import (
-	"time"
-
 	"github.com/aimbot1526/adhd-server/app/models"
+	"github.com/aimbot1526/adhd-server/pkg/payload/request"
 	"github.com/gofiber/fiber/v2"
 )
 
 func CreateProduct(c *fiber.Ctx) error {
 
-	p := &models.Product{}
+	p := &request.CreateProductRequest{}
 
 	if err := c.BodyParser(p); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -27,7 +26,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	pc := models.FindPcById(p.ProductCategoryID)
+	pc := models.FindPcById(p.ProductCategoryId)
 
 	if pc.ID == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -36,7 +35,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	pi := models.FindPiById(p.ProductInventoryID)
+	pi := models.FindPiById(p.ProductInventoryId)
 
 	if pc.ID == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -45,7 +44,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	d := models.FindDiscountById(p.DiscountID)
+	d := models.FindDiscountById(p.DiscountId)
 
 	if d.ID == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -54,13 +53,16 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	p.Created_At = time.Now()
-	p.Updated_At = time.Now()
-	p.ProductCategory = *pc
-	p.ProductInventory = *pi
-	p.Discount = *d
+	newProduct := models.Product{
+		Name:             p.Name,
+		Description:      p.Description,
+		Price:            p.Price,
+		ProductCategory:  *pc,
+		ProductInventory: *pi,
+		Discount:         *d,
+	}
 
-	e := p.Create()
+	e := newProduct.Create()
 
 	if e != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -69,7 +71,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	resp := models.MapProduct(p)
+	resp := models.MapProduct(&newProduct)
 
 	return c.JSON(resp)
 }
