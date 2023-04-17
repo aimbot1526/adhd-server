@@ -82,7 +82,11 @@ func GetAllProducts() (*[]Product, error) {
 
 	temp := []Product{}
 
-	err := GetDB().Find(&temp).Error
+	err := GetDB().
+		Preload("ProductCategory").
+		Preload("ProductInventory").
+		Preload("Discount").
+		Find(&temp).Error
 
 	if err != nil {
 		return &temp, err
