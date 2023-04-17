@@ -78,14 +78,14 @@ func FindByProductName(name string) *Product {
 	return &temp
 }
 
-// func GetAllProducts() *[]Product {
+func GetAllProducts() (*[]Product, error) {
 
-// 	temp := Product{}
+	temp := []Product{}
 
-// 	err := GetDB().Model(&temp).Preload("ProductCategory").Preload("ProductInventory").Preload("Discount").Find(&temp)
+	err := GetDB().Find(&temp).Error
 
-// 	if err != nil {
-// 		return temp
-// 	}
-
-// }
+	if err != nil {
+		return &temp, err
+	}
+	return &temp, nil
+}

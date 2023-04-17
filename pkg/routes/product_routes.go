@@ -9,6 +9,8 @@ func ProductRoute(a *fiber.App) {
 
 	route := a.Group("/api/v1/products")
 
+	route.Get("/all", controllers.FindAllProducts)
+
 	route.Post("/add", controllers.CreateProduct)
 
 	route.Post("/add/offer", controllers.CreateDiscount)

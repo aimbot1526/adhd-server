@@ -23,7 +23,7 @@ func CreateProduct(c *fiber.Ctx) error {
 	if exProduct.ID != 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
-			"msg":   "Discount already exists. Please try again!",
+			"msg":   "No Discount exists. Please try again!",
 		})
 	}
 
@@ -72,4 +72,17 @@ func CreateProduct(c *fiber.Ctx) error {
 	resp := models.MapProduct(p)
 
 	return c.JSON(resp)
+}
+
+func FindAllProducts(c *fiber.Ctx) error {
+
+	all, err := models.GetAllProducts()
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Please try again later !",
+		})
+	}
+	return c.JSON(all)
 }
