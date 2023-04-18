@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"time"
+
 	"github.com/aimbot1526/adhd-server/app/models"
 	"github.com/aimbot1526/adhd-server/pkg/payload/request"
 	"github.com/gofiber/fiber/v2"
@@ -22,7 +24,7 @@ func CreateProduct(c *fiber.Ctx) error {
 	if exProduct.ID != 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
-			"msg":   "No Discount exists. Please try again!",
+			"msg":   "Product already exists. Please try again!",
 		})
 	}
 
@@ -60,6 +62,8 @@ func CreateProduct(c *fiber.Ctx) error {
 		ProductCategory:  *pc,
 		ProductInventory: *pi,
 		Discount:         *d,
+		Created_At:       time.Now(),
+		Updated_At:       time.Now(),
 	}
 
 	e := newProduct.Create()

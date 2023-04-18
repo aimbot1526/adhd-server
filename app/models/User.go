@@ -19,7 +19,6 @@ type User struct {
 
 func MapUser(u *User) *User {
 	temp := User{
-		ID:         u.ID,
 		Email:      u.Email,
 		Phone:      u.Phone,
 		Created_At: u.Created_At,

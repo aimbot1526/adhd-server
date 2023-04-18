@@ -10,4 +10,6 @@ func UserRoute(a *fiber.App) {
 	route := a.Group("/api/v1/user")
 
 	route.Post("/create", controllers.CreateUser)
+
+	route.Post("/add/address/:id", controllers.AddUserAddress)
 }
