@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/aimbot1526/adhd-server/app/models"
+	"github.com/aimbot1526/adhd-server/pkg/payload/request"
+	"github.com/aimbot1526/adhd-server/pkg/payload/response"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -82,4 +84,66 @@ func UpdateShoppingSession(c *fiber.Ctx) error {
 	resp := models.MapSession(updatedSession)
 
 	return c.JSON(resp)
+}
+
+func AddProductToCart(c *fiber.Ctx) error {
+
+	dep := &request.AddToCartRequest{}
+
+	if err := c.BodyParser(dep); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": true,
+			"msg":   err.Error(),
+		})
+	}
+
+	cart := models.CartItem{
+		Quantity:          dep.Quantity,
+		Created_At:        time.Now(),
+		Updated_At:        time.Now(),
+		ProductID:         dep.ProductId,
+		ShoppingSessionID: dep.ShoppingSessionId,
+	}
+
+	e := cart.Create()
+
+	if e != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Please try again later !",
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"error": false,
+		"msg":   "Item added Successfully.",
+	})
+}
+
+func GetAllCartItems(c *fiber.Ctx) error {
+
+	all, err := models.FindAllItemsInCart()
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Please try again later !",
+		})
+	}
+
+	var filtered []response.CartItem
+
+	for _, p := range *all {
+		t := response.ProductResponse{
+			Name:        p.Product.Name,
+			Description: p.Product.Description,
+			Price:       p.Product.Price,
+			Created_At:  p.Product.Created_At,
+			Updated_At:  p.Product.Updated_At,
+		}
+		temp := models.MapCart(&t, &p)
+		filtered = append(filtered, *temp)
+	}
+
+	return c.JSON(filtered)
 }

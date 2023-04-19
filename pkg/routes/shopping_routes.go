@@ -12,4 +12,8 @@ func ShoppingRoute(a *fiber.App) {
 	route.Post("/add/session/:id", controllers.CreateShoppingSession)
 
 	route.Patch("/update/session/:id", controllers.UpdateShoppingSession)
+
+	route.Post("/cart/add", controllers.AddProductToCart)
+
+	route.Get("/cart/list", controllers.GetAllCartItems)
 }
