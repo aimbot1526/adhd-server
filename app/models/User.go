@@ -60,18 +60,19 @@ func (user *User) Delete() error {
 	return nil
 }
 
-func UpdateUser(user *User) error {
+// TODO : Fix it, example at shoppingSession line 53
+// func UpdateUser(user *User) error {
 
-	err := GetDB().First(user).Error
+// 	err := GetDB().First(user).Error
 
-	if err != nil {
-		return err
-	}
+// 	if err != nil {
+// 		return err
+// 	}
 
-	GetDB().Save(user)
+// 	GetDB().Save(user)
 
-	return nil
-}
+// 	return nil
+// }
 
 func FindByUserEmail(email string) *User {
 

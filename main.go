@@ -17,5 +17,7 @@ func main() {
 
 	routes.UserRoute(app)
 
+	routes.ShoppingRoute(app)
+
 	server.StartServer(app)
 }
