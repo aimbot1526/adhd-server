@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/aimbot1526/adhd-server/pkg/payload/response"
+)
 
 type Product struct {
 	ID                 int `gorm:"primaryKey"`
@@ -17,17 +21,13 @@ type Product struct {
 	Discount           Discount
 }
 
-func MapProduct(p *Product) *Product {
-	temp := Product{
-		ID:               p.ID,
-		Name:             p.Name,
-		Description:      p.Description,
-		Price:            p.Price,
-		Created_At:       p.Created_At,
-		Updated_At:       p.Updated_At,
-		ProductCategory:  p.ProductCategory,
-		ProductInventory: p.ProductInventory,
-		Discount:         p.Discount,
+func MapProduct(p *Product) *response.ProductResponse {
+	temp := response.ProductResponse{
+		Name:        p.Name,
+		Description: p.Description,
+		Price:       p.Price,
+		Created_At:  p.Created_At,
+		Updated_At:  p.Updated_At,
 	}
 	return &temp
 }
@@ -91,5 +91,18 @@ func GetAllProducts() (*[]Product, error) {
 	if err != nil {
 		return &temp, err
 	}
+	return &temp, nil
+}
+
+func FindProductById(id int) (*Product, error) {
+
+	temp := Product{}
+
+	err := GetDB().Where("id = ?", id).First(&temp).Error
+
+	if err != nil {
+		return &temp, err
+	}
+
 	return &temp, nil
 }
