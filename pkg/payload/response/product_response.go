@@ -3,6 +3,7 @@ package response
 import "time"
 
 type ProductResponse struct {
+	Id          int
 	Name        string
 	Description string
 	Price       int

@@ -23,6 +23,7 @@ type Product struct {
 
 func MapProduct(p *Product) *response.ProductResponse {
 	temp := response.ProductResponse{
+		Id:          p.ID,
 		Name:        p.Name,
 		Description: p.Description,
 		Price:       p.Price,
