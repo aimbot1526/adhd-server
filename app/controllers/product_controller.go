@@ -89,7 +89,7 @@ func GetProduct(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
-			"msg":   "Please try again later! No userId found",
+			"msg":   "Please try again later! No Product found",
 		})
 	}
 
